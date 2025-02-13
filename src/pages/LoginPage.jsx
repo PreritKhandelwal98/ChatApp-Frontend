@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { FaLock } from "react-icons/fa";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -10,20 +11,38 @@ const LoginPage = () => {
         password: "",
     });
 
+    const [errors, setErrors] = useState({}); // For real-time validation
+
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         setData(prev => ({
             ...prev,
             [name]: value
         }));
+
+        // Real-time Validation
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            [name]: value.trim() === "" ? "This field is required" : ""
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Basic Validation
+        if (!data.identifier || !data.password) {
+            setErrors({
+                identifier: data.identifier ? "" : "Email is required",
+                password: data.password ? "" : "Password is required"
+            });
+            return;
+        }
+
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/local`, data);
-            console.log("this is response: ",response.data.user.username);
             toast.success('Login successful');
+
             if (response) {
                 localStorage.setItem('token', response.data.jwt);
                 localStorage.setItem('username', response.data.user.username);
@@ -31,44 +50,63 @@ const LoginPage = () => {
             }
         } catch (error) {
             console.error(error.response?.data?.message);
-            toast.error("Login failed");
+            toast.error("Invalid email or password");
         }
     };
 
     return (
-        <div className='mt-5'>
-            <div className='bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto'>
-                <h3>Welcome to ConnectNow</h3>
-                <form className='grid gap-4 mt-3' onSubmit={handleSubmit}>
-                    <div className='flex flex-col gap-1'>
-                        <label htmlFor='email'>Email :</label>
+        <div className="flex min-h-screen bg-gray-100 items-center justify-center">
+            <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+                <div className="flex justify-center mb-4">
+                    <FaLock className="text-blue-600 text-3xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-center text-gray-800">Welcome to ConnectNow</h3>
+                <p className="text-center text-gray-500 mb-4">Securely log in to continue</p>
+
+                <form className="space-y-4" onSubmit={handleSubmit}>
+                    {/* Email Field */}
+                    <div className="flex flex-col">
+                        <label htmlFor="email" className="text-gray-700 font-medium">Email</label>
                         <input
-                            type='text'
-                            id='text'
-                            name='identifier'
-                            placeholder='enter your email'
-                            className='bg-slate-100 px-2 py-1 focus:outline-primary'
+                            type="text"
+                            id="identifier"
+                            name="identifier"
+                            placeholder="Enter your email"
+                            className="border p-3 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                             value={data.identifier}
                             onChange={handleOnChange}
-                            required
                         />
-                        <label htmlFor='password'>Password :</label>
+                        {errors.identifier && <p className="text-red-500 text-sm">{errors.identifier}</p>}
+                    </div>
+
+                    {/* Password Field */}
+                    <div className="flex flex-col">
+                        <label htmlFor="password" className="text-gray-700 font-medium">Password</label>
                         <input
-                            type='password'
-                            id='password'
-                            name='password'
-                            placeholder='enter your password'
-                            className='bg-slate-100 px-2 py-1 focus:outline-primary'
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            className="border p-3 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                             value={data.password}
                             onChange={handleOnChange}
-                            required
                         />
+                        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
                     </div>
-                    <button type="submit" className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Login</button>
 
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition"
+                    >
+                        Login
+                    </button>
                 </form>
-                <p className='my-3 text-center'>New User ? <Link to={"/register"} className='hover:text-primary font-semibold'>Register</Link></p>
-                {/* <p className='my-3 text-center'><Link to={"/forgot-password"} className='hover:text-primary font-semibold'>Forgot password ?</Link></p> */}
+
+                {/* Register Link */}
+                <p className="text-center text-gray-600 mt-4">
+                    New User? <Link to="/register" className="text-blue-600 font-semibold hover:underline">Register</Link>
+                </p>
             </div>
         </div>
     );
