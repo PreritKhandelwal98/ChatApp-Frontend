@@ -1,21 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-const useWebSocket = (url) => {
+const useWebSocket = (url, sessionId) => {
     const [ws, setWs] = useState(null);
-    const [messages, setMessages] = useState(() => {
-        return JSON.parse(localStorage.getItem("chatMessages")) || [];
-    });
+    const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         const socket = new WebSocket(url);
-
         socket.onopen = () => console.log("✅ Connected to WebSocket Server");
 
         socket.onmessage = (event) => {
             console.log(`📩 Message Received: ${event.data}`);
+
             setMessages((prev) => {
                 const newMessages = [...prev, event.data];
-                localStorage.setItem("chatMessages", JSON.stringify(newMessages));
+
+                // Save messages for this session
+                const storedSessions = JSON.parse(localStorage.getItem("sessions")) || {};
+                storedSessions[sessionId] = newMessages;
+                localStorage.setItem("sessions", JSON.stringify(storedSessions));
+
                 return newMessages;
             });
         };
@@ -27,7 +30,13 @@ const useWebSocket = (url) => {
         return () => {
             socket.close();
         };
-    }, [url]);
+    }, [url, sessionId]);
+
+    useEffect(() => {
+        // Load session messages when switching sessions
+        const storedSessions = JSON.parse(localStorage.getItem("sessions")) || {};
+        setMessages(storedSessions[sessionId] || []);
+    }, [sessionId]);
 
     const sendMessage = (message) => {
         if (ws && ws.readyState === WebSocket.OPEN) {
