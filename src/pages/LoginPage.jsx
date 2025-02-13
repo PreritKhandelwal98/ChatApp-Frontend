@@ -22,10 +22,11 @@ const LoginPage = () => {
         e.preventDefault();
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/local`, data);
-            console.log("this is response: ",response.data.jwt);
+            console.log("this is response: ",response.data.user.username);
             toast.success('Login successful');
             if (response) {
                 localStorage.setItem('token', response.data.jwt);
+                localStorage.setItem('username', response.data.user.username);
                 navigate('/');
             }
         } catch (error) {
