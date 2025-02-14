@@ -22,8 +22,8 @@ https://github.com/user-attachments/assets/cb6a25a6-595c-4fb1-a314-822fce63bfac
 - **Database:** PostgreSQL (or SQLite)
 - **Real-time Messaging:** WebSockets (ws)
 - **Hosting:**  
-  - Backend → [Render](https://chatapp-backend-strapi.onrender.com)  
-  - Frontend → [Vercel](https://chat-app-frontend-r3fh.vercel.app/)
+  - Backend → [Render]
+  - Frontend → [Vercel]
 
 ---
 
