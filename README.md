@@ -8,7 +8,11 @@ This is a real-time chat application built using **Strapi (Backend)** and **Vite
 https://github.com/user-attachments/assets/cb6a25a6-595c-4fb1-a314-822fce63bfac 
 
 📸 Screenshots:  
-![Chat App Screenshot](#) *(Add screenshot links here)*  
+![Image](https://github.com/user-attachments/assets/2a5ced19-2900-4e57-b7d7-5c60b6726da0)
+
+![Image](https://github.com/user-attachments/assets/bc844b91-493e-4be1-9729-b25394d2c48b)
+
+![Image](https://github.com/user-attachments/assets/016c29f2-f152-45f2-b08c-00cddcc6e58e)
 
 ---
 
