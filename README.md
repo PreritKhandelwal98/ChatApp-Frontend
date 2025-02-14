@@ -28,8 +28,9 @@ This is a real-time chat application built using **Strapi (Backend)** and **Vite
 ### 🛠️ **1. Clone the Repository**
 ```
 https://github.com/PreritKhandelwal98/ChatApp-Frontend.git
-```
 cd ChatApp-Frontend
+```
+
 🖥️ Frontend Setup
 📌 1. Navigate to frontend
 ```
