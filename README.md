@@ -5,7 +5,7 @@ This is a real-time chat application built using **Strapi (Backend)** and **Vite
 ---
 
 ## 📽️ **Live Demo & Screenshots**
-🎥 [Demo Video](#) *(Add video link here)*  
+🎥 [Demo Video](#) *(https://github.com/user-attachments/assets/cb6a25a6-595c-4fb1-a314-822fce63bfac)*  
 
 📸 Screenshots:  
 ![Chat App Screenshot](#) *(Add screenshot links here)*  
