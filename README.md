@@ -26,14 +26,19 @@ This is a real-time chat application built using **Strapi (Backend)** and **Vite
 ## 🚀 **Getting Started**
 
 ### 🛠️ **1. Clone the Repository**
-```sh
+```
 https://github.com/PreritKhandelwal98/ChatApp-Frontend.git
+```
 cd ChatApp-Frontend
-🖥️ Frontend Setup (Vite + React)
+🖥️ Frontend Setup
 📌 1. Navigate to frontend
+```
 cd frontend
+```
 📌 2. Install dependencies
+```
 npm install
+```
 📌 3. Set up environment variables
 Create a .env file in the frontend directory and add:
 
