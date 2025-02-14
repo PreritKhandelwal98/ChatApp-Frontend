@@ -32,6 +32,7 @@ cd ChatApp-Frontend
 ```
 
 🖥️ Frontend Setup
+
 📌 1. Navigate to frontend
 ```
 cd frontend
